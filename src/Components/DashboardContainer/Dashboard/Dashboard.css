@@ -1,0 +1,13 @@
+.Dashboard{
+    display: flex;
+    justify-content: space-between;
+    max-width: 1440px;
+    width: 100%;
+}
+
+.grid-container{
+    display: grid;
+    grid-column-gap: 1rem;
+    grid-row-gap: 1rem;
+    grid-template-columns: 50% 50%;
+}

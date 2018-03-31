@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css?family=Khula');
+
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Khula';
+  background-color: #f7f7fc !important;
+}
+
+.inner{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1440px;
+}
