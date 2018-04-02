@@ -39,7 +39,6 @@ class Dashboard extends Component{
                         <Col md="12">
                             <div className={'grid-container'}>
                             {this.props.data.map((c) => {
-                                console.log(c ? c.alpha3 : '');
                                 return c && c.name ? 
                                     <CountryCardContainer countryName={c.name} countryAlpha3Code={c.alpha3} className={'grid-item'}/>
                                 : null;

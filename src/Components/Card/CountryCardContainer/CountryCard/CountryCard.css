@@ -1,0 +1,7 @@
+.card-overlay{
+    transition: background-color 1s ease;
+    background-color: 'rgba(0,0,0,0.4)';
+}
+.card-overlay:hover{
+    background-color: transparent;
+}

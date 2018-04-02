@@ -9,7 +9,7 @@ const mapStyle = require('../../../../helpers/maps-style.json');
 
 const CountryCard = (props) => 
     <Card className={'h-100 bg-dark'} style={{minHeight: '300px'}}>
-        <div className={'position-absolute d-flex align-items-center justify-content-between h-100 w-100'} style={{zIndex: '102', background: 'rgba(0,0,0,0.4)'}}>
+        <div className={'position-absolute d-flex align-items-center justify-content-between h-100 w-100 card-overlay'} style={{zIndex: '102'}}>
             <h5 className={'text-center text-light w-100'}>{props.title}</h5>
         </div>
         {props.center.lat && props.center.lng ?
