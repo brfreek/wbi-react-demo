@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css?family=Khula');
+@import url('./animate.css');
 
+html, body, #root{
+  font-family: 'Khula';
+  height: 100% !important;
+  min-height: 100% !important;
+}
 
 body {
   margin: 0;

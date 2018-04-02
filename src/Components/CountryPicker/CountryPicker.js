@@ -4,9 +4,9 @@ import {Input} from 'reactstrap';
 
 const CountryPicker = props => 
     <Input type="select" onChange={props.onChange} style={{width: '200px', marginRight: '1rem'}}>
-        <option value={null}>-- Select Country --</option>
+        <option value={''}>-- Select Country --</option>
         {countries.all.map(c => {
-            return <option key={c.alpha2} value={c.alpha2}>{c.name}</option>
+            return <option key={c.alpha3} value={c.alpha3}>{c.name}</option>
         })}
     </Input>
 

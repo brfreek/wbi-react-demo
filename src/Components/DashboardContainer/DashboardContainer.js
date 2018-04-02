@@ -6,42 +6,54 @@ import webService from '../../helpers/webservice';
 import Dashboard from './Dashboard/Dashboard';
 import DashboardHeader from './DashboardHeader/DashboardHeader';
 
+const data = require('../../data/dataset.json');
+
 class DashboardContainer extends Component{
 
     constructor(props){
         super(props);
-
+        this.changeCountry = this.changeCountry.bind(this);
+        this.filterData = this.filterData.bind(this);
         this.state = {
-            dashboard: {
-                country: '',
-                loans: []
-            }
+            countryFilter: ''
         }
     }
-    changeDate(startDate, endDate){
-        console.log("New start and end date: " + startDate + ' ' + endDate);
-    } 
-    changeCountry(countryCode){
-        console.log("CountryCode: " + countryCode);
 
-        webService.getLoansForCountry(countryCode).
-            then((result) => {
-                console.log(JSON.stringify(result));
-                let state = this.state;
-                let ent = state.entity        
-                ent.country = countryCode;
-                ent.loans = result;
-                this.setState(state);
-            }).catch((error) => {
-                alert(error);
-            }).bind(this);
+    componentWillMount(props){
+        
+        for(let i = 0; i < data.length; i++){
+            let dataItem = data[i];
+            dataItem.years.map((c, i) => {
+                c.year = 1962 + i;
+            });
+        }
+
+    }
+    changeCountry(value){
+        let state = this.state;
+        state.countryFilter = value;
+        this.setState(state);
     }
 
+    filterData(){
+
+        const list = data.filter((c) => {
+            if(c.country.toLowerCase().includes(this.state.countryFilter.toLowerCase())){
+                return c;
+            }
+        });
+        console.log(JSON.stringify(list));
+        return list;
+    }
+
+     
     render(){
         return(
-            <div>
-                <DashboardHeader title='Dashboard' onDateRangeChange={this.changeDate} onCountryChange={this.changeCountry}/>
-                <Dashboard loans={this.state.entity}/>
+            <div className={'h-100'}>
+                <DashboardHeader title='Dashboard' onCountryChange={this.changeCountry}/>
+                {this.state.countryFilter.length > 0 ? 
+                <Dashboard data={this.filterData()}/> : ''
+                }
             </div>
         )
     }

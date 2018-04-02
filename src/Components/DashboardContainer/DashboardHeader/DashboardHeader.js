@@ -1,44 +1,83 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {Row, Col} from 'reactstrap';
+import {Jumbotron, FormGroup, Input} from 'reactstrap';
+import {withGoogleMap, withScriptjs, GoogleMap, Marker} from 'react-google-maps';
+
+import InputControlBig from '../../Input/InputControlBig/InputControlBig';
 
 import './DashboardHeader.css';
+const mapStyle = require('../../../helpers/maps-style.json');
 
-import DateRange from '../../DatePicker/DateRange/DateRange';
-import CountryPicker from '../../CountryPicker/CountryPicker';
-import {parseDate} from '../../../utils';
-
-class DashboardHeader extends Component{
+class DashboardHeader extends Component{    
+    
     constructor(props){
         super(props);
-
         this.onCountryChange = this.onCountryChange.bind(this);
-    }
-    onCountryChange(event){
-        if(event.target.value){
-            this.props.onCountryChange(event.target.value);
+        this.state = {
+            shrinkMap: false
         }
     }
+
+    onCountryChange(event){
+        console.log("returned: " + event.target.value);
+        let state = this.state;
+        if(event.target.value.length > 0){
+            //Send to parent
+            state.shrinkMap = true
+        } else {
+            state.shrinkMap = false
+            //Make the map great again
+        }
+        this.props.onCountryChange(event.target.value);
+
+        this.setState(state);
+    }
+
     render(){
+        const shrinkClass = this.state.shrinkMap ? 'animate-shrink' : 'animate-grow';
         return(
-            <div className={'d-flex justify-content-center  bg-primary'}>
-                <div className={'inner pt-3 pb-3'}>
-                    <div>
-                        <h3 className={'text-light'}>{this.props.title}</h3>
-                    </div>
-                    <div className={'d-flex'}>
-                        <CountryPicker onChange={this.onCountryChange}/>
-                        <DateRange fromDate={new Date()} toDate={new Date(parseDate.addDays(new Date(), 1))} onChange={this.props.onDateRangeChange}/>
+            <Jumbotron className={'p-0 mb-0 map-container ' + shrinkClass}>
+                <MapComponent
+                    isMarkerShown
+                    googleMapURL='https://maps.googleapis.com/maps/api/js?key=AIzaSyBYWcR5f6KwJNA8dUItVT0StcKtW4FzwAQ&v=3.exp&libraries=geometry,drawing,places'
+                    defaultOptions={{styles: mapStyle, mapTypeControl: false, panControl: false, streetViewControl: false, zoomControl: false}}
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `inherit`, width: '100%', position: 'absolute' }} />}
+                    mapElement={<div style={{ height: `100%` }} />}
+                    zoomLevel={this.props.zoomLevel}
+                    center={this.props.center}
+                />
+                <div className={'position-absolute w-100 maps-overlay'} style={{zIndex: '100', height: 'inherit'}}>
+                    <div className={'d-flex justify-content-center flex-column align-items-center h-100'}>
+                        <h1 style={{color: 'rgba(255, 255, 255, 0.8)'}}>WorldBank</h1>
+                        <FormGroup className={'w-100'}>
+                            <InputControlBig type='text' placeholder='Search on country' onChange={this.onCountryChange} />
+                        </FormGroup>
                     </div>
                 </div>
-            </div>
+            </Jumbotron>
         )
     }
+
 }
 
 DashboardHeader.propTypes = {
-    onDateRangeChange: PropTypes.func.isRequired,
-    onCountryChange: PropTypes.func.isRequired
+    onDateRangeChange: PropTypes.func.isRequired
 }
+DashboardHeader.defaultProps = {
+    center: {lat: 52.154273, lng: 4.498858},
+    zoomLevel: 15
+}
+
+const MapComponent = withScriptjs(withGoogleMap((props) => 
+    <GoogleMap
+        defaultZoom={props.zoomLevel}
+        defaultCenter={props.center}
+        defaultOptions={props.defaultOptions}
+        defaultClickableIcons={false}
+        clickableIcons={false}
+        >
+    </GoogleMap>
+))
 
 export default DashboardHeader;

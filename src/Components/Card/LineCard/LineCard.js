@@ -25,7 +25,7 @@ const LineCard = props =>
 LineCard.propTypes = {
     title: PropTypes.string.isRequired,
     difference: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
+    value: PropTypes.string.isRequired,
     data: PropTypes.array
 }
 

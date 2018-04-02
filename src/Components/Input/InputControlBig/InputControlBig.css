@@ -1,0 +1,38 @@
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+.input-control-big, .input-control-big:focus{
+    width: 100%;
+    height: 30px;
+    line-break: 30px;
+    padding: 2rem;
+    background-color: rgba(0,0,0,0.8);
+    border-color: rgba(0,0,0,1);
+    color: #fff;
+    font-weight: lighter;
+    text-transform: capitalize;
+}
+.container{
+    width: 50%;
+    margin-left: 25%;
+    height: auto;
+    position: relative;
+}
+.input-search{
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 110;
+    padding-right: 3rem;
+    /* padding-top: 3rem; */
+    color:  rgba(255, 255, 255, 0.5);
+    height: 100%;
+    width: 1rem;
+}
+
+.input-search.searching{
+    -webkit-animation:spin 1s linear infinite;
+    -moz-animation:spin 1s linear infinite;
+    animation:spin 1s linear infinite;
+}

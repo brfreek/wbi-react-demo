@@ -4,3 +4,22 @@
     max-width: 1440px;
     width: 100%;
 }
+
+.maps-overlay{
+    background: rgba(0,0,0,0.1);
+    color: #ffffff;
+}
+
+.map-container{
+    -webkit-transition: height 1s; 
+    -moz-transition: height 1s; 
+    -ms-transition: height 1s; 
+    -o-transition: height 1s; 
+    transition: height 1s;
+}
+.animate-shrink{
+    height: 30%
+}
+.animate-grow{
+    height: 100%;
+}

@@ -1,25 +1,34 @@
 import React, { Component } from 'react';
 import {Row, Col} from 'reactstrap';
 import {countries} from 'country-data';
+import anime from 'animejs';
 
 import "./Dashboard.css";
 import cardData from "../../../helpers/cardData";
 
 import Sidebar from '../../Sidebar/Sidebar';
 import LineCard from '../../Card/LineCard/LineCard';
+import {parseNumber} from '../../../utils';
 
 class Dashboard extends Component{
-    createFakeData(){
-        // This function creates data that doesn't look entirely random
-        const data = []
-    
-        for (let x = 0; x <= 30; x++) {
-          const random = Math.random();
-          const temp = data.length > 0 ? data[data.length-1].y : 50;
-          const y = random >= .45 ? temp + Math.floor(random * 20) : temp - Math.floor(random * 20);
-          data.push({x,y})
-        }
-        return data;
+    constructor(props){
+        super(props);
+
+        this.getDifference = this.getDifference.bind(this);
+    }
+    getDifference(arr){
+        return Math.round((arr[arr.length-2].y/arr[0].y));
+    }
+    componentDidMount(){
+        anime({
+            targets: '.gridcontainer .grid-item',
+            translateY: 100,
+            direction: 'alternate',
+            loop: false,
+            delay: function(el, i, l){
+                return i * 10
+            }
+        });
     }
     
     render(){
@@ -28,10 +37,15 @@ class Dashboard extends Component{
                 <div className={'inner pt-3 pb-3'}>
                     <Row className={'w-100'}>
                         <Col md="9">
-                            <div className={'grid-container'}>
-                                {this.props.data.map(c => {
-                                    return (<div className={'grid-item'} key={c.title}><LineCard title={c.title} difference={c.difference} value={c.value} data={this.createFakeData()} /></div>)
-                                })}
+                            <div className={'grid-container '}>
+                                {this.props.data ? this.props.data.map(c => {
+                                    if(!c){
+                                        return;
+                                    }
+                                    const years = c.years;
+                                    years.slice(0, -1);
+                                    return (<div className={'grid-item animated fadeIn'} key={c.country}><LineCard title={c.country} difference={this.getDifference(years)} value={parseNumber.formatCurrency(years[years.length-2].y)} data={years} /></div>)
+                                }) : null}
                             </div>
                         </Col>
                         <Col md="3">

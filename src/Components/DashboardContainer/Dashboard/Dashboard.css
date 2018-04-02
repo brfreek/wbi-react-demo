@@ -11,3 +11,6 @@
     grid-row-gap: 1rem;
     grid-template-columns: 50% 50%;
 }
+.singleItem{
+    grid-template-columns: 100% !important;
+}
