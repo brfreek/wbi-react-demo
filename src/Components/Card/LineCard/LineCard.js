@@ -6,16 +6,18 @@ import {IoAndroidArrowUp, IoAndroidArrowDown} from 'react-icons/lib/io';
 
 import { parseNumber } from '../../../utils';
 
+import './LineCard.css';
+
 const LineCard = props =>
     <Card>
-        <CardBody>
+        <CardBody className={'bg-secondary mb-1'}>
             <div className={'d-flex justify-content-between'}>
-                <strong>{props.title}</strong>
+                <strong className={'text-light mb-1'}>{props.title}</strong>
                 {parseNumber.isPositive(props.difference) ? 
                 <Badge color='success' className={'align-items-center d-flex'}><strong><IoAndroidArrowUp /></strong>{props.difference}%</Badge> :
                 <Badge color='danger' className={'align-items-center d-flex'}><strong><IoAndroidArrowDown /></strong>{props.difference}%</Badge>}
             </div>
-            <h2 className={'text-blue'}>€{props.value}</h2>
+            <h2 className={'text-light'}>€{props.value}</h2>
         </CardBody>
         <div>
             <LineChart data={props.data} color={"#B8D1FF"} />

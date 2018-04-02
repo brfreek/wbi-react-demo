@@ -7,7 +7,7 @@ import "./Dashboard.css";
 import cardData from "../../../helpers/cardData";
 
 import Sidebar from '../../Sidebar/Sidebar';
-import LineCard from '../../Card/LineCard/LineCard';
+import CountryCardContainer from '../../Card/CountryCardContainer/CountryCardContainer';
 import {parseNumber} from '../../../utils';
 
 class Dashboard extends Component{
@@ -33,23 +33,18 @@ class Dashboard extends Component{
     
     render(){
         return(
-            <div className={'d-flex justify-content-center'}>
-                <div className={'inner pt-3 pb-3'}>
-                    <Row className={'w-100'}>
-                        <Col md="9">
-                            <div className={'grid-container '}>
-                                {this.props.data ? this.props.data.map(c => {
-                                    if(!c){
-                                        return;
-                                    }
-                                    const years = c.years;
-                                    years.slice(0, -1);
-                                    return (<div className={'grid-item animated fadeIn'} key={c.country}><LineCard title={c.country} difference={this.getDifference(years)} value={parseNumber.formatCurrency(years[years.length-2].y)} data={years} /></div>)
-                                }) : null}
+            <div className={'d-flex justify-content-center h-100'}>
+                <div className={'inner pt-3 pb-3 h-100'}>
+                    <Row className={'w-100 h-100'}>
+                        <Col md="12">
+                            <div className={'grid-container'}>
+                            {this.props.data.map((c) => {
+                                console.log(c ? c.alpha3 : '');
+                                return c && c.name ? 
+                                    <CountryCardContainer countryName={c.name} countryAlpha3Code={c.alpha3} className={'grid-item'}/>
+                                : null;
+                            })}
                             </div>
-                        </Col>
-                        <Col md="3">
-                            <Sidebar />
                         </Col>
                     </Row>
                 </div>

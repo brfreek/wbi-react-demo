@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {Jumbotron, FormGroup, Input} from 'reactstrap';
-import {withGoogleMap, withScriptjs, GoogleMap, Marker} from 'react-google-maps';
 
+import MapComponent from '../../MapComponent/MapComponent';
 import InputControlBig from '../../Input/InputControlBig/InputControlBig';
 
 import './DashboardHeader.css';
+
 const mapStyle = require('../../../helpers/maps-style.json');
 
 class DashboardHeader extends Component{    
@@ -68,16 +69,5 @@ DashboardHeader.defaultProps = {
     center: {lat: 52.154273, lng: 4.498858},
     zoomLevel: 15
 }
-
-const MapComponent = withScriptjs(withGoogleMap((props) => 
-    <GoogleMap
-        defaultZoom={props.zoomLevel}
-        defaultCenter={props.center}
-        defaultOptions={props.defaultOptions}
-        defaultClickableIcons={false}
-        clickableIcons={false}
-        >
-    </GoogleMap>
-))
 
 export default DashboardHeader;
